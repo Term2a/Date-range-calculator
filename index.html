@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <meta http-equiv="CONTENT-TYPE" content="text/html; charset=UTF-8">
+  <title>Date range calculator</title>
+</head>
+<body>
+  <main class="main">
+    <div class="date-picker">
+      <input type="date" id="date-born" />
+    </div>
+    <nav class="calculate-range">
+      <button id="calculate" onclick="calculateRange()">
+        Calculate
+      </button>
+    </nav>
+    <div>
+      <p id="result"></p>
+    </div>
+    <div>
+      <p id="breakdown"></p>
+    </div>
+  </main>
+  
+  <style>
+  * {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: rgb(50, 50, 50);
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.date-picker input {
+  width: 150px;
+  height: 45px;
+  border-radius: 4px;
+}
+
+.calculate-range button {
+  width: 150px;
+  height: 45px;
+  color: black;
+  background: white;
+  border: 2px solid rgb(25, 25, 25);
+  border-radius: 4px;
+}
+
+#result, #breakdown {
+  width: 100vw;
+  color: white;
+  font-size: 1.4rem;
+  text-align: center;
+  margin: auto;
+}
+  
+  #breakdown {
+    font-size: 1.15rem;
+  }
+  </style>
+  
+  <script>
+    const dateBorn = document.getElementById("date-born");
+    const dateNow = new Date();
+
+    function calculateRange() {
+      const rangeMs = Math.abs(dateNow - new Date(dateBorn.value));
+      const range = rangeMs / 1000 / 60 / 60 / 24;
+      const result = (range / 365);
+      
+      const years = result.toFixed(0);
+      const months = ((range - (years - 1) * 365) / 30).toFixed(0);
+      const days = ((range - years) - (years - 1) * 365).toFixed(0);
+      
+      document.getElementById("result").innerText = result.toFixed(3);
+      document.getElementById("breakdown").innerText = `${years} years, ${months} months, ${days} days`;
+    }
+  </script>
+</body>
+</html>
